@@ -19,7 +19,9 @@ sed -i '/Defaults    requiretty/c\#Defaults    requiretty' /etc/sudoers; \
 sed -i '/Port 22/c\Port 2222' /etc/ssh/sshd_config; \
 # We *do* want a dependency to rpcbind, as nfs needs it
 # sed -i 's/Requires\=rpcbind\.service//g' /usr/lib/systemd/system/glusterd.service; \
-sed -i 's/rpcbind\.service/gluster-setup\.service/g' /usr/lib/systemd/system/glusterd.service; \
+# The following is strange... the only reference to rpcbind.service would have been removed by
+# the previous line? We comment the next line, too, for that reason.
+# sed -i 's/rpcbind\.service/gluster-setup\.service/g' /usr/lib/systemd/system/glusterd.service; \
 sed -i 's/ENV{DM_UDEV_DISABLE_OTHER_RULES_FLAG}=="1", ENV{SYSTEMD_READY}="0"/ENV{DM_UDEV_DISABLE_OTHER_RULES_FLAG}=="1", GOTO="systemd_end"/g' /usr/lib/udev/rules.d/99-systemd.rules; \
 mkdir -p /etc/glusterfs_bkp /var/lib/glusterd_bkp /var/log/glusterfs_bkp;\
 cp -r /etc/glusterfs/* /etc/glusterfs_bkp;\
