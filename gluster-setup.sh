@@ -12,6 +12,9 @@
 # cases as published by the Free Software Foundation.
 ###
 
+# keep IP address in filesystem
+ip addr | grep 'eth0$' | grep -Pom 1 '[0-9.]{7,15}' > /opt/ipaddr
+
 main () {
   if test "$(ls /var/lib/heketi/fstab)"
   then
